@@ -15,13 +15,13 @@ git clone https://github.com/OndraTom/JsonSchemaGenerator
 
 ## Execution
 ### Parameters
-- **--file**  input JSON file path (required)
+- **--input**  input JSON file path (required)
 - **--required-items** makes all form items required (optional)
 - **--invisible-items** makes all form items invisible (optional)
 
 ### Example
 ```
-python3 json_schema_generator.py --file=./tests/test.json --required-items
+python3 json_schema_generator.py --input=./tests/test.json --required-items
 ```
 
 ## Tests
