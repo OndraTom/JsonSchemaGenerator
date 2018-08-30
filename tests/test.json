@@ -1,0 +1,9 @@
+ {
+    "string": "test",
+    "number": 1,
+    "boolean": true,
+    "object": {
+        "string": "inner"
+    },
+    "array": ["foo", "bar"]
+}
