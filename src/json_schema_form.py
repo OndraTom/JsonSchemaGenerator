@@ -38,6 +38,8 @@ class JsonSchemaFormInput(ABC):
             snake_name -> Snake Name
             camelName -> Camel Name
         """
+        # remove special symbols
+        name = name.replace("#", "")
         # snake case
         if "_" in name:
             return " ".join(name.split("_")).title()
@@ -276,7 +278,7 @@ class UnknownInputType(JsonSchemaFormInputFactoryException):
     def __init__(self, input_name: str):
         self.input_name = input_name
 
-    def __repr__(self):
+    def __str__(self) -> str:
         return "Input '" + self.input_name + "' has unknown type"
 
 
@@ -285,7 +287,7 @@ class IncompatibleArrayItemsInput(JsonSchemaFormInputFactoryException):
     def __init__(self, input_name: str):
         self.input_name = input_name
 
-    def __repr__(self):
+    def __str__(self) -> str:
         return "Input '" + self.input_name + "' has incompatible type with other array items"
 
 
@@ -294,5 +296,5 @@ class ObjectInputPropertyNotFound(JsonSchemaFormException):
     def __init__(self, property_name: str):
         self.property_name = property_name
 
-    def __repr__(self):
+    def __str__(self) -> str:
         return "Object property '" + self.property_name + "' hasn't been found"
