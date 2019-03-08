@@ -28,8 +28,7 @@ class JsonSchemaFormTests(TestCase):
                     },
                     "number": {
                         "title": "Number",
-                        "type": "string",
-                        "cast_type": "integer"
+                        "type": "integer"
                     },
                     "boolean": {
                         "title": "Boolean",
@@ -83,8 +82,7 @@ class JsonSchemaFormTests(TestCase):
                     },
                     "number": {
                         "title": "Number",
-                        "type": "string",
-                        "cast_type": "integer"
+                        "type": "integer"
                     },
                     "boolean": {
                         "title": "Boolean",
@@ -274,5 +272,39 @@ class JsonSchemaFormTests(TestCase):
             JsonSchemaForm,
             {
                 "array": ["foo", False]
+            }
+        )
+
+    def test_cast_types(self):
+        form = JsonSchemaForm(
+            {
+                "string": "test",
+                "integer": 1,
+                "float": 1.2
+            },
+            items_are_required=False,
+            cast_types=True
+        )
+        self.assertEqual(
+            form.get_data_schema(),
+            {
+                "type": "object",
+                "properties": {
+                    "string": {
+                        "title": "String",
+                        "type": "string"
+                    },
+                    "integer": {
+                        "title": "Integer",
+                        "type": "string",
+                        "cast_type": "integer"
+                    },
+                    "float": {
+                        "title": "Float",
+                        "type": "string",
+                        "cast_type": "float"
+                    }
+                },
+                "required": []
             }
         )

@@ -78,13 +78,22 @@ class StringInput(JsonSchemaFormInput):
         return definition
 
 
-class NumberInput(JsonSchemaFormInput):
+class IntegerInput(JsonSchemaFormInput):
     """
-    Number input
+    Integer input
     """
 
     def get_type(self) -> str:
-        return "number"
+        return "integer"
+
+
+class FloatInput(JsonSchemaFormInput):
+    """
+    Float input
+    """
+
+    def get_type(self) -> str:
+        return "float"
 
 
 class BooleanInput(JsonSchemaFormInput):
@@ -200,8 +209,9 @@ class JsonSchemaFormInputFactory:
     Form inputs factory
     """
 
-    def __init__(self, items_are_required: bool):
+    def __init__(self, items_are_required: bool, cast_types: bool):
         self.items_are_required = items_are_required
+        self.cast_types = cast_types
 
     def create_input(self, input_name: str, input_value) -> JsonSchemaFormInput:
         """
@@ -212,9 +222,13 @@ class JsonSchemaFormInputFactory:
         if isinstance(input_value, str):
             return StringInput(input_name)
         if isinstance(input_value, int):
-            return StringInput(input_name, cast_type="integer")
+            if self.cast_types:
+                return StringInput(input_name, cast_type="integer")
+            return IntegerInput(input_name)
         if isinstance(input_value, float):
-            return StringInput(input_name, cast_type="float")
+            if self.cast_types:
+                return StringInput(input_name, cast_type="float")
+            return FloatInput(input_name)
         if isinstance(input_value, dict):
             input_item = ObjectInput(input_name, self.items_are_required)
             for key, value in input_value.items():
@@ -240,12 +254,13 @@ class JsonSchemaForm:
     JSON schema form
     """
 
-    def __init__(self, schema: dict, items_are_required: bool = True, items_are_invisible: bool = False):
+    def __init__(self, schema: dict, items_are_required: bool = True, items_are_invisible: bool = False,
+                 cast_types: bool = False):
         self.schema = schema
         self.items_are_required = items_are_required
         self.items_are_invisible = items_are_invisible
         self.inputs = []
-        self.inputs_factory = JsonSchemaFormInputFactory(self.items_are_required)
+        self.inputs_factory = JsonSchemaFormInputFactory(self.items_are_required, cast_types)
         self.data_schema = None
         self.ui_schema = None
         self._load_inputs_from_schema()

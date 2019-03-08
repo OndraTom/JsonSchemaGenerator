@@ -26,7 +26,8 @@ try:
     json_schema_form = JsonSchemaForm(
         json.loads(json_string),
         items_are_required=cli_arguments.is_argument_set("required-items"),
-        items_are_invisible=cli_arguments.is_argument_set("invisible-items")
+        items_are_invisible=cli_arguments.is_argument_set("invisible-items"),
+        cast_types=cli_arguments.is_argument_set("cast_types")
     )
     # printing the schema on the standard output
     print(
