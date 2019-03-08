@@ -64,8 +64,18 @@ class StringInput(JsonSchemaFormInput):
     String input
     """
 
+    def __init__(self, name: str, cast_type: str = None):
+        super().__init__(name=name)
+        self.cast_type = cast_type
+
     def get_type(self) -> str:
         return "string"
+
+    def get_definition(self) -> dict:
+        definition = super().get_definition()
+        if self.cast_type:
+            definition["cast_type"] = self.cast_type
+        return definition
 
 
 class NumberInput(JsonSchemaFormInput):
@@ -201,8 +211,10 @@ class JsonSchemaFormInputFactory:
             return BooleanInput(input_name)
         if isinstance(input_value, str):
             return StringInput(input_name)
-        if isinstance(input_value, int) or isinstance(input_value, float):
-            return NumberInput(input_name)
+        if isinstance(input_value, int):
+            return StringInput(input_name, cast_type="integer")
+        if isinstance(input_value, float):
+            return StringInput(input_name, cast_type="float")
         if isinstance(input_value, dict):
             input_item = ObjectInput(input_name, self.items_are_required)
             for key, value in input_value.items():
