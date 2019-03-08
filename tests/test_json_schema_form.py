@@ -28,7 +28,8 @@ class JsonSchemaFormTests(TestCase):
                     },
                     "number": {
                         "title": "Number",
-                        "type": "number"
+                        "type": "string",
+                        "cast_type": "integer"
                     },
                     "boolean": {
                         "title": "Boolean",
@@ -82,7 +83,8 @@ class JsonSchemaFormTests(TestCase):
                     },
                     "number": {
                         "title": "Number",
-                        "type": "number"
+                        "type": "string",
+                        "cast_type": "integer"
                     },
                     "boolean": {
                         "title": "Boolean",
@@ -231,7 +233,7 @@ class JsonSchemaFormTests(TestCase):
                         "foo": "val"
                     },
                     {
-                        "bar": 1
+                        "bar": True
                     }
                 ]
             },
@@ -255,7 +257,7 @@ class JsonSchemaFormTests(TestCase):
                                 },
                                 "bar": {
                                     "title": "Bar",
-                                    "type": "number"
+                                    "type": "boolean"
                                 }
                             },
                             "required": []
@@ -271,6 +273,6 @@ class JsonSchemaFormTests(TestCase):
             IncompatibleArrayItemsInput,
             JsonSchemaForm,
             {
-                "array": ["foo", 1]
+                "array": ["foo", False]
             }
         )
