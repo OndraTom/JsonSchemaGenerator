@@ -11,7 +11,7 @@ try:
     cli_arguments = CliArguments(
         sys.argv[1:],
         mandatory_arguments=["input"],
-        optional_arguments=["required-items", "invisible-items"]
+        optional_arguments=["required-items", "invisible-items", "cast-types"]
     )
     # input JSON path detection and validation
     try:
