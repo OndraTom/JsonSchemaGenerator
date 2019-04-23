@@ -18,7 +18,7 @@ git clone https://github.com/OndraTom/JsonSchemaGenerator
 - **--input**  input JSON file path (required)
 - **--required-items** makes all form items required (optional)
 - **--invisible-items** makes all form items invisible (optional)
-- **--cast_types** makes number types as string with a cast_type parameter
+- **--cast-types** makes number types as string with a cast_type parameter (optional)
 
 ### Example
 ```
